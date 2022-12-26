@@ -11,14 +11,14 @@ app.listen(PORT, () => {
 })
 
 app.get('/', (req, res) => {
-	if(typeof req.id !== "undefined") {
-		
+	if(typeof req.id !== "undefined" && typeof rooms[req.id] !== "undefined") {
+		res.send(JSON.stringify(rooms[req.id]))
 	} else res.send('')
 })
 
 app.get('/start', (req, res) => {
 	let id = uuidv4();
-	game.rooms[id] = {};
+	rooms[id] = {};
 	res.send('ID : '+id)
 })
 
