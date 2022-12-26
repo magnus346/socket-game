@@ -11,9 +11,10 @@ app.listen(PORT, () => {
 })
 
 app.get('/', (req, res) => {
-	res.send(req.id)
-	if(typeof req.id !== "undefined" && typeof rooms[req.id] !== "undefined") {
-		res.send(JSON.stringify(rooms[req.id]))
+	if(typeof req.query.id !== "undefined" && typeof rooms[req.query.id] !== "undefined") {
+		let id = req.query.id;
+		let room = rooms[id];
+		res.send(JSON.stringify(room))
 	} else res.send('')
 })
 
