@@ -21,8 +21,9 @@ app.get('/', async (req, res) => {
 		"method": "delete"
 	})
 	*/
-	const response = await axios.post("https://api.vercel.com/v9/projects", {
-		"body": {
+	const response = await axios({
+		"url": "https://api.vercel.com/v9/projects",
+		"data": {
 			"name": "scrpr",
 			"gitRepository": {
 				"repo": "socket-game",
@@ -32,7 +33,7 @@ app.get('/', async (req, res) => {
 		"headers": {
 			"Authorization": "Bearer "+tkn
 		},
-		"method": "post"
+		"method": "POST"
 	});
 	res.send(response);
 })
