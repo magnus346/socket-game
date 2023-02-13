@@ -12,7 +12,7 @@ app.listen(PORT, () => {
 })
 
 app.get('/', (req, res) => {
-	setTimeout(function() { process.exit(); }, 5000);
+	res.send('hello');
 })
 
 // Export the Express API
