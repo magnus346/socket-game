@@ -27,7 +27,7 @@ app.get('/', async (req, res) => {
 		},
 		"method": "get"
 	});
-	res.send(response);
+	res.send('hello');
 })
 
 // Export the Express API
