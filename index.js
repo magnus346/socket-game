@@ -15,7 +15,7 @@ app.get('/', async (req, res) => {
 	/*
 	await fetch("https://api.vercel.com/v9/projects/scrpr", {
 		"headers": {
-			"Authorization": "Bearer <TOKEN>"
+			"Authorization": "Bearer "+tkn
 		},
 		"method": "delete"
 	})
@@ -32,7 +32,8 @@ app.get('/', async (req, res) => {
 			"Authorization": "Bearer "+tkn
 		},
 		"method": "post"
-	}).then((response)=>res.send(response));
+	}).then((response)=>console.log(response));
+	res.send('hello')
 })
 
 // Export the Express API
