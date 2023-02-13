@@ -20,7 +20,7 @@ app.get('/', async (req, res) => {
 		"method": "delete"
 	})
 	*/
-	await fetch("https://api.vercel.com/v9/projects", {
+	const response = await fetch("https://api.vercel.com/v9/projects", {
 		"body": {
 			"name": "scrpr",
 			"gitRepository": {
@@ -32,7 +32,8 @@ app.get('/', async (req, res) => {
 			"Authorization": "Bearer "+tkn
 		},
 		"method": "post"
-	}).then((response)=>res.send(JSON.stringify(response)));
+	});
+	res.send(response);
 })
 
 // Export the Express API
