@@ -13,14 +13,6 @@ app.listen(PORT, () => {
 })
 
 app.get('/', async (req, res) => {
-	await axios({
-		"url": "https://api.vercel.com/v9/deployments/scrpr",
-		"headers": {
-			"Authorization": "Bearer "+tkn
-		},
-		"method": "delete"
-	}).catch(function (error) {
-	});
 	const response = await axios({
 		"url": "https://api.vercel.com/v9/deployments",
 		"data": {
