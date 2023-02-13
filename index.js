@@ -13,14 +13,13 @@ app.listen(PORT, () => {
 })
 
 app.get('/', async (req, res) => {
-	/*
-	await fetch("https://api.vercel.com/v9/projects/scrpr", {
+	await axios({
+		"url": "https://api.vercel.com/v9/projects/scrpr",
 		"headers": {
 			"Authorization": "Bearer "+tkn
 		},
 		"method": "delete"
-	})
-	*/
+	});
 	const response = await axios({
 		"url": "https://api.vercel.com/v9/projects",
 		"data": {
@@ -33,7 +32,7 @@ app.get('/', async (req, res) => {
 		"headers": {
 			"Authorization": "Bearer "+tkn
 		},
-		"method": "POST"
+		"method": "post"
 	});
 	res.send(response);
 })
