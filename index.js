@@ -14,26 +14,12 @@ app.listen(PORT, () => {
 
 app.get('/', async (req, res) => {
 	await axios({
-		"url": "https://api.vercel.com/v9/projects/scrpr",
+		"url": "https://api.vercel.com/v9/deployments/scrpr",
 		"headers": {
 			"Authorization": "Bearer "+tkn
 		},
 		"method": "delete"
 	}).catch(function (error) {
-	});
-	await axios({
-		"url": "https://api.vercel.com/v9/projects",
-		"data": {
-			"name": "scrpr",
-			"gitRepository": {
-				"repo": "socket-game",
-				"type": "github"
-			}
-		},
-		"headers": {
-			"Authorization": "Bearer "+tkn
-		},
-		"method": "post"
 	});
 	const response = await axios({
 		"url": "https://api.vercel.com/v9/deployments",
