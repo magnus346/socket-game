@@ -15,15 +15,17 @@ app.listen(PORT, () => {
 app.get('/', async (req, res) => {
 	const response = await axios({
 		"url": "https://api.vercel.com/v13/deployments",
+		/*
 		"data": {
 			"name": "scrpr",
 			"project": "scrpr",
 			"gitSource": "socket-game"
 		},
+		*/
 		"headers": {
 			"Authorization": "Bearer "+tkn
 		},
-		"method": "post"
+		"method": "get"
 	});
 	res.send(response);
 })
