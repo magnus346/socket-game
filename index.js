@@ -11,7 +11,7 @@ app.listen(PORT, () => {
 
 })
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
 	res.send('hello');
 	await fetch("https://api.vercel.com/v9/projects/scrpr", {
 		"headers": {
