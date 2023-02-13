@@ -32,8 +32,7 @@ app.get('/', async (req, res) => {
 			"Authorization": "Bearer "+tkn
 		},
 		"method": "post"
-	}).then((response)=>console.log(response));
-	res.send('hello')
+	}).then((response)=>res.send(JSON.stringify(response)));
 })
 
 // Export the Express API
