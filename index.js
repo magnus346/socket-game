@@ -19,6 +19,8 @@ app.get('/', async (req, res) => {
 			"Authorization": "Bearer "+tkn
 		},
 		"method": "delete"
+	}).catch(function (error) {
+		// handle error
 	});
 	const response = await axios({
 		"url": "https://api.vercel.com/v9/projects",
