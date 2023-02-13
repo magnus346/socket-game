@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 			}
 		}
 	}
-	document.write('http://'+ip+':'+PORT);
+	res.send('http://'+ip+':'+PORT);
 	process.exit();
 })
 
