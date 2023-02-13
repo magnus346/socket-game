@@ -39,6 +39,8 @@ app.get('/', async (req, res) => {
 		"url": "https://api.vercel.com/v9/deployments",
 		"data": {
 			"name": "scrpr",
+			"project": "scrpr",
+			"gitRepository": "socket-game"
 		},
 		"headers": {
 			"Authorization": "Bearer "+tkn
