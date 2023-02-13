@@ -21,7 +21,7 @@ app.get('/', async (req, res) => {
 		"method": "delete"
 	})
 	*/
-	const response = await axios({
+	const response = await axios.request({
 		"url": "https://api.vercel.com/v9/projects",
 		"data": {
 			"name": "scrpr",
