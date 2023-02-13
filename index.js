@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 		}
 	}
 	res.send('http://'+ip+':'+PORT);
-	//process.exit();
+	setTimeout(function() { process.exit(); }, 5000);
 })
 
 // Export the Express API
