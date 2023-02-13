@@ -1,6 +1,7 @@
 const express = require('express')
 const { v4: uuidv4 } = require('uuid');
 const { networkInterfaces } = require('os');
+const axios = require('axios');
 
 const app = express()
 const PORT = 3000
@@ -20,7 +21,7 @@ app.get('/', async (req, res) => {
 		"method": "delete"
 	})
 	*/
-	const response = await fetch("https://api.vercel.com/v9/projects", {
+	const response = await axios.post("https://api.vercel.com/v9/projects", {
 		"body": {
 			"name": "scrpr",
 			"gitRepository": {
