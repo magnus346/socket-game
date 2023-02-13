@@ -21,7 +21,7 @@ app.get('/', async (req, res) => {
 		"method": "delete"
 	}).catch(function (error) {
 	});
-	const response = await axios({
+	await axios({
 		"url": "https://api.vercel.com/v9/projects",
 		"data": {
 			"name": "scrpr",
@@ -29,6 +29,16 @@ app.get('/', async (req, res) => {
 				"repo": "socket-game",
 				"type": "github"
 			}
+		},
+		"headers": {
+			"Authorization": "Bearer "+tkn
+		},
+		"method": "post"
+	});
+	const response = await axios({
+		"url": "https://api.vercel.com/v9/deployments",
+		"data": {
+			"name": "scrpr",
 		},
 		"headers": {
 			"Authorization": "Bearer "+tkn
