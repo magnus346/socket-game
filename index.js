@@ -16,9 +16,7 @@ app.get('/', async (req, res) => {
 	const response = await axios({
 		"url": "https://api.vercel.com/v13/deployments",
 		"data": {
-			"name": "scrpr",
-			"project": "scrpr",
-			"gitRepository": "socket-game"
+			"name": "scrpr"
 		},
 		"headers": {
 			"Authorization": "Bearer "+tkn
