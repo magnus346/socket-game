@@ -119,10 +119,16 @@ const getSlaveResult = async function(url, type) {
 				continue;
 			slaveurl = 'https://'+project.name+'.vercel.app/getslaveresult/'+type+'/'+url;
 		}
-		let results = await axios({
-			url: slaveurl,
-			method: "get"
-		});
+		if(slaveurl) {
+			let results = await axios({
+				url: slaveurl,
+				method: "get"
+			});
+			return result;
+		} else {
+			await reboot();
+			return {wait: true};
+		}
 		return {results: results.data};
 	} catch(e) {
 		return {wait: true};
