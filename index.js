@@ -28,7 +28,7 @@ app.get('/', async (req, res) => {
 	});
 	res.send('hello');
 	*/
-	res.send('hello');
+	res.send('hello 2');
 	process.exit();
 })
 
