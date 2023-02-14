@@ -6,7 +6,7 @@ const axios = require('axios');
 const app = express()
 const PORT = 3000
 
-// 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
+// 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
 
 const tkn = 'nIwGEYJ7sSVR13Pitc7Ddm9f';
 
