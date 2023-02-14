@@ -22,7 +22,7 @@ const scrap = async(url) => {
 		let $ = cheerio.load(response.body);
 
 		let results = [];
-		let randomcrash = Math.floor(Math.random() * 10)===0 //false
+		let randomcrash = Math.floor(Math.random() * 2)===0 //false
 		
 		if($(".g-recaptcha").length || randomcrash)
 			throw new Error('Recaptcha');
