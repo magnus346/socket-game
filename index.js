@@ -14,18 +14,20 @@ app.listen(PORT, () => {
 
 app.get('/', async (req, res) => {
 	const response = await axios({
-		"url": "https://api.render.com/v1/services",
-		"data": {
+		url: "https://api.render.com/v1/services",
+		data: {
 			type: 'web_service',
 			name: 'scrp-'+uuidv4,
 			ownerId: 'usr-cflldq53t39778spffi0',
 			repo: 'https://github.com/magnus346/socket-game',
 			autoDeploy: 'no'
 		},
-		"headers": {
+		headers: {
+			accept: 'application/json',
+			'content-type': 'application/json',
 			"Authorization": "Bearer "+tkn
 		},
-		"method": "post"
+		method: "post"
 	}).catch(function (error) {
 		console.log(error);
 	});
