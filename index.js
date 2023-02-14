@@ -6,7 +6,7 @@ const axios = require('axios');
 const app = express()
 const PORT = 3000
 
-// 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
+// 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
 
 const tkn = 'nIwGEYJ7sSVR13Pitc7Ddm9f';
 
@@ -16,18 +16,15 @@ app.listen(PORT, () => {
 
 app.get('/', async (req, res) => {
 	const response = await axios({
-		"url": "https://api.vercel.com/v6/deployments",
-		/*
+		"url": "https://api.vercel.com/v13/deployments",
 		"data": {
 			"name": "scrpr",
-			"project": "scrpr",
 			"gitSource": "socket-game"
 		},
-		*/
 		"headers": {
 			"Authorization": "Bearer "+tkn
 		},
-		"method": "get"
+		"method": "post"
 	}).catch(function (error) {
 	console.log(error.toJSON());
 	});
