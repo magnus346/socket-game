@@ -28,7 +28,7 @@ const scrap = async(url) => {
 		else {
 			$(".g").each((i,el) => {
 				results.push({
-					title: $(el).find("a").first("h3").text(),
+					title: $(el).find("a").find("h3").first().text(),
 					link: $(el).find("a").attr("href")
 				})
 			})
