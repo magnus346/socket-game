@@ -11,7 +11,7 @@ const selectRandomUserAgent = () => {
     return userAgents[randomNumber];
 }
 
-const scrap = async(url) => {
+const scrap = async(url, type) => {
 	return unirest
 	.get(url)
 	.headers({
@@ -22,18 +22,20 @@ const scrap = async(url) => {
 		let $ = cheerio.load(response.body);
 
 		let results = [];
-		let randomcrash = Math.floor(Math.random() * 2)===0 //false
+		let randomcrash = false //Math.floor(Math.random() * 4)===0 //false
 		
 		if($(".g-recaptcha").length || randomcrash)
 			throw new Error('Recaptcha');
 		else {
-			$(".g").each((i,el) => {
-				results.push({
-					title: $(el).find("a").find("h3").first().text(),
-					link: $(el).find("a").attr("href")
+			if(type=='google') {
+				$(".g").each((i,el) => {
+					results.push({
+						title: $(el).find("a").find("h3").first().text(),
+						link: $(el).find("a").attr("href")
+					})
 				})
-			})
-			return results;
+				return results;
+			} else throw new Error('Wrong type');
 		}
 	})
 }
@@ -45,7 +47,7 @@ const reboot = async function() {
 		headers: {
 			accept: 'application/json',
 			'content-type': 'application/json',
-			"Authorization": "Bearer "+tkn
+			"Authorization": "Bearer "+vercel_token
 		},
 		method: "get"
 	}).catch(function (error) {
@@ -59,7 +61,7 @@ const reboot = async function() {
 			headers: {
 				accept: 'application/json',
 				'content-type': 'application/json',
-				"Authorization": "Bearer "+tkn
+				"Authorization": "Bearer "+vercel_token
 			},
 			method: "delete"
 		}).catch(function (error) {
@@ -75,7 +77,7 @@ const reboot = async function() {
 		headers: {
 			accept: 'application/json',
 			'content-type': 'application/json',
-			"Authorization": "Bearer "+tkn
+			"Authorization": "Bearer "+vercel_token
 		},
 		method: "post"
 	}).catch(function (error) {
@@ -90,7 +92,7 @@ const reboot = async function() {
 		headers: {
 			accept: 'application/json',
 			'content-type': 'application/json',
-			"Authorization": "Bearer "+tkn
+			"Authorization": "Bearer "+vercel_token
 		},
 		method: "post"
 	}).catch(function (error) {
@@ -98,14 +100,14 @@ const reboot = async function() {
 	});
 }
 
-const getSlaveResult = async function(url) {
+const getSlaveResult = async function(url, type) {
 	try {
 		const findurl = await axios({
 			url: "https://api.vercel.com/v9/projects",
 			headers: {
 				accept: 'application/json',
 				'content-type': 'application/json',
-				"Authorization": "Bearer "+tkn
+				"Authorization": "Bearer "+vercel_token
 			},
 			method: "get"
 		}).catch(function (error) {
@@ -115,7 +117,7 @@ const getSlaveResult = async function(url) {
 		for(let project of findurl.data.projects) {
 			if(project.name=='scrp')
 				continue;
-			slaveurl = 'https://'+project.name+'.vercel.app/getslaveresult/'+url;
+			slaveurl = 'https://'+project.name+'.vercel.app/getslaveresult/'+type+'/'+url;
 		}
 		let results = await axios({
 			url: slaveurl,
@@ -123,14 +125,14 @@ const getSlaveResult = async function(url) {
 		});
 		return {results: results.data};
 	} catch(e) {
-		return {error: 'rebooting'};
+		return {wait: true};
 	}
 }
 
 const app = express()
 const PORT = 3000
 
-const tkn = 'x6nzGDEq4havOYnRtt5q6hnP';
+const vercel_token = 'x6nzGDEq4havOYnRtt5q6hnP';
 
 app.listen(PORT, () => {
 	
@@ -141,21 +143,22 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/google-scrap/:keywords', async (req, res) => {
-	const url = "https://www.google.com/search?q="+req.params.keywords+"&gl=fr&lr=lang_fr&hl=lang_fr&start="+(10*0);
-	const r = await getSlaveResult(encodeURIComponent(url));
+	const page = 1;
+	const url = "https://www.google.com/search?q="+req.params.keywords+"&gl=fr&lr=lang_fr&hl=lang_fr&start="+(10*(page-1));
+	const r = await getSlaveResult(encodeURIComponent(url), 'google');
 	console.log(r);
-	if(typeof r.error !== "undefined")
+	if(typeof r.wait !== "undefined")
 		res.send(r);
 	else
 		res.send({url: url, results: r});
 })
 
-app.get('/getslaveresult/:url', async (req, res) => {
+app.get('/getslaveresult/:type/:url', async (req, res) => {
 	try {
-		const results = await scrap(req.params.url);
+		const results = await scrap(req.params.url, req.params.type);
 		res.send(results);
 	} catch (e) {
-		const name = await reboot();
+		await reboot();
 		res.sendStatus(404);	
 	}
 })
