@@ -143,6 +143,7 @@ app.get('/', async (req, res) => {
 app.get('/google-scrap/:keywords', async (req, res) => {
 	const url = "https://www.google.com/search?q="+req.params.keywords+"&gl=fr&lr=lang_fr&hl=lang_fr&start="+(10*0);
 	const r = await getSlaveResult(encodeURIComponent(url));
+	console.log(r);
 	if(typeof r.error !== "undefined")
 		res.send(r);
 	else
