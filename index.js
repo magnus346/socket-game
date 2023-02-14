@@ -12,7 +12,7 @@ const selectRandomUserAgent = () => {
 }
 
 const scrap = async() => {
-	const url = "https://www.google.com/search?q=accropode&gl=fr&lr=lang_fr&hl=lang_fr&start=10";
+	const url = "https://www.google.com/search?q=accropode&gl=fr&lr=lang_fr&hl=lang_fr&start="+(10*0);
 
 	return unirest
 	.get(url)
