@@ -121,10 +121,9 @@ const getSlaveResult = async function(url) {
 			url: slaveurl,
 			method: "get"
 		});
-		return results.data;
+		return {results: results.data};
 	} catch(e) {
-		await new Promise(r => setTimeout(r, 5000));
-		return await getSlaveResult(url);
+		return {error: 'rebooting'};
 	}
 }
 
@@ -144,7 +143,10 @@ app.get('/', async (req, res) => {
 app.get('/google-scrap/:keywords', async (req, res) => {
 	const url = "https://www.google.com/search?q="+req.params.keywords+"&gl=fr&lr=lang_fr&hl=lang_fr&start="+(10*0);
 	const r = await getSlaveResult(encodeURIComponent(url));
-	res.send({url: url, results: r});
+	if(typeof r.error !== "undefined")
+		res.send(r);
+	else
+		res.send({url: url, results: r});
 })
 
 app.get('/getslaveresult/:url', async (req, res) => {
