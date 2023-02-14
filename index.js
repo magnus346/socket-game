@@ -127,11 +127,12 @@ const getSlaveResult = async function(url, type) {
 			return result;
 		} else {
 			await reboot();
-			return {wait: true, case: 1};
+			return {wait: true};
 		}
 		return {results: results.data};
 	} catch(e) {
-		return {wait: true, case: 2};
+		console.log(e);
+		return {wait: true};
 	}
 }
 
