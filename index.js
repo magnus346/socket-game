@@ -11,9 +11,7 @@ const selectRandomUserAgent = () => {
     return userAgents[randomNumber];
 }
 
-const scrap = async() => {
-	const url = "https://www.google.com/search?q=accropode&gl=fr&lr=lang_fr&hl=lang_fr&start="+(10*0);
-
+const scrap = async(url) => {
 	return unirest
 	.get(url)
 	.headers({
@@ -99,7 +97,7 @@ const reboot = async function() {
 	});
 }
 
-const getSlaveResult = async function() {
+const getSlaveResult = async function(url) {
 	const findurl = await axios({
 		url: "https://api.vercel.com/v9/projects",
 		headers: {
@@ -111,18 +109,18 @@ const getSlaveResult = async function() {
 	}).catch(function (error) {
 		console.log(error.response);
 	});
-	let url = null;
+	let slaveurl = null;
 	for(let project of findurl.data.projects) {
 		if(project.name=='scrp')
 			continue;
-		url = 'https://'+project.name+'.vercel.app/getslaveresult';
+		slaveurl = 'https://'+project.name+'.vercel.app/getslaveresult/'+url;
 	}
 	let results = await axios({
-		url: url,
+		url: slaveurl,
 		method: "get"
 	}).catch(async function (error) {
 		setTimeout(async function() {
-			return await getSlaveResult();
+			return await getSlaveResult(url);
 		}, 30000);
 	});
 	return results.data;
@@ -141,14 +139,15 @@ app.get('/', async (req, res) => {
 	res.send('hello');
 })
 
-app.get('/scrap', async (req, res) => {
-	const r = await getSlaveResult();
+app.get('/google-scrap/:keywords', async (req, res) => {
+	const url = "https://www.google.com/search?q="+req.params.keywords+"&gl=fr&lr=lang_fr&hl=lang_fr&start="+(10*0);
+	const r = await getSlaveResult(encodeURIComponent(url));
 	res.send(r);
 })
 
-app.get('/getslaveresult/', async (req, res) => {
+app.get('/getslaveresult/:url', async (req, res) => {
 	try {
-		const results = await scrap();
+		const results = await scrap(req.params.url);
 		res.send(results);
 	} catch (e) {
 		const name = await reboot();
