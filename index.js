@@ -87,7 +87,7 @@ const reboot = async function() {
 }
 
 app.get('/', async (req, res) => {
-	res.send('https://'+new_project.name+'.vercel.app');
+	res.send('hello');
 })
 
 app.get('/scrap/', async (req, res) => {
