@@ -6,7 +6,7 @@ const axios = require('axios');
 const app = express()
 const PORT = 3000
 
-const tkn = 'nIwGEYJ7sSVR13Pitc7Ddm9f';
+const tkn = 'rnd_KeKLvRMQEdsN92Yq8BLa3hydUENR';
 
 app.listen(PORT, () => {
 
