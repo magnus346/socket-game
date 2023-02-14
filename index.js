@@ -125,7 +125,7 @@ const getSlaveResult = async function() {
 			return await getSlaveResult();
 		}, 30000);
 	});
-	return results;
+	return results.data;
 }
 
 const app = express()
