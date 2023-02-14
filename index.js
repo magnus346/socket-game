@@ -101,38 +101,34 @@ const reboot = async function() {
 }
 
 const getSlaveResult = async function(url, type) {
-	try {
-		const findurl = await axios({
-			url: "https://api.vercel.com/v9/projects",
-			headers: {
-				accept: 'application/json',
-				'content-type': 'application/json',
-				"Authorization": "Bearer "+vercel_token
-			},
-			method: "get"
-		}).catch(function (error) {
-			console.log(error.response);
-		});
-		let slaveurl = null;
-		for(let project of findurl.data.projects) {
-			if(project.name=='scrp')
-				continue;
-			slaveurl = 'https://'+project.name+'.vercel.app/getslaveresult/'+type+'/'+url;
-		}
-		if(slaveurl) {
-			let results = await axios({
-				url: slaveurl,
-				method: "get"
-			});
-			return result;
-		} else {
-			await reboot();
-			return {wait: true};
-		}
-		return {results: results.data};
-	} catch(e) {
-		return {wait: true, error: e};
+	const findurl = await axios({
+		url: "https://api.vercel.com/v9/projects",
+		headers: {
+			accept: 'application/json',
+			'content-type': 'application/json',
+			"Authorization": "Bearer "+vercel_token
+		},
+		method: "get"
+	}).catch(function (error) {
+		console.log(error.response);
+	});
+	let slaveurl = null;
+	for(let project of findurl.data.projects) {
+		if(project.name=='scrp')
+			continue;
+		slaveurl = 'https://'+project.name+'.vercel.app/getslaveresult/'+type+'/'+url;
 	}
+	if(slaveurl) {
+		let results = await axios({
+			url: slaveurl,
+			method: "get"
+		});
+		return result;
+	} else {
+		await reboot();
+		return {wait: true};
+	}
+	return {results: results.data};
 }
 
 const app = express()
