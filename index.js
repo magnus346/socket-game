@@ -131,8 +131,7 @@ const getSlaveResult = async function(url, type) {
 		}
 		return {results: results.data};
 	} catch(e) {
-		console.log(e);
-		return {wait: true};
+		return {wait: true, error: e};
 	}
 }
 
