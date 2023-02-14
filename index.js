@@ -100,7 +100,7 @@ const reboot = async function() {
 }
 
 const getSlaveResult = async function() {
-	const url = await axios({
+	const findurl = await axios({
 		url: "https://api.vercel.com/v9/projects",
 		headers: {
 			accept: 'application/json',
@@ -112,19 +112,20 @@ const getSlaveResult = async function() {
 		console.log(error.response);
 	});
 	let url = null;
-	for(let project of new_projects.data.projects) {
+	for(let project of findurl.data.projects) {
 		if(project.name=='scrp')
 			continue;
-		url = 'https://'+project.name+'.vercel.app';
+		url = 'https://'+project.name+'.vercel.app/getslaveresult';
 	}
-	let result = await axios({
+	let results = await axios({
 		url: url,
 		method: "get"
-	}).catch(function (error) {
-		setTimeout(function() {
-			getSlaveResult();
+	}).catch(async function (error) {
+		setTimeout(async function() {
+			return await getSlaveResult();
 		}, 30000);
-	});	
+	});
+	return results;
 }
 
 const app = express()
@@ -137,10 +138,15 @@ app.listen(PORT, () => {
 })
 
 app.get('/', async (req, res) => {
-	getSlaveResult();
+	res.send('hello');
 })
 
-app.get('/scrp/', async (req, res) => {
+app.get('/scrap', async (req, res) => {
+	const r = await getSlaveResult();
+	res.send(r);
+})
+
+app.get('/getslaveresult/', async (req, res) => {
 	try {
 		const results = await scrap();
 		res.send(results);
