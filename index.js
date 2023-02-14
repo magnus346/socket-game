@@ -22,11 +22,7 @@ app.get('/', async (req, res) => {
 			repo: 'https://github.com/magnus346/socket-game',
 			autoDeploy: 'no',
 			serviceDetails: {
-				publishPath: 'public',
-				pullRequestPreviewsEnabled: 'no',
-				disk: {sizeGB: 1},
 				envSpecificDetails: {buildCommand: 'yarn', startCommand: 'node index.js'},
-				numInstances: 1,
 				plan: 'starter',
 				region: 'frankfurt',
 				env: 'node'
