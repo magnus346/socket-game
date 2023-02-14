@@ -123,7 +123,7 @@ const getSlaveResult = async function(url) {
 		});
 		return results.data;
 	} catch(e) {
-		await new Promise(r => setTimeout(r, 20000));
+		await new Promise(r => setTimeout(r, 5000));
 		return await getSlaveResult(url);
 	}
 }
