@@ -20,7 +20,17 @@ app.get('/', async (req, res) => {
 			name: 'scrp-'+uuidv4,
 			ownerId: 'usr-cflldq53t39778spffi0',
 			repo: 'https://github.com/magnus346/socket-game',
-			autoDeploy: 'no'
+			autoDeploy: 'no',
+			serviceDetails: {
+				publishPath: 'public',
+				pullRequestPreviewsEnabled: 'no',
+				disk: {sizeGB: 1},
+				envSpecificDetails: {buildCommand: 'yarn', startCommand: 'node index.js'},
+				numInstances: 1,
+				plan: 'starter',
+				region: 'frankfurt',
+				env: 'node'
+			}
 		},
 		headers: {
 			accept: 'application/json',
