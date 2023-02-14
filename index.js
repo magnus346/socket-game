@@ -6,8 +6,6 @@ const axios = require('axios');
 const app = express()
 const PORT = 3000
 
-// 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
-
 const tkn = 'nIwGEYJ7sSVR13Pitc7Ddm9f';
 
 app.listen(PORT, () => {
@@ -15,6 +13,7 @@ app.listen(PORT, () => {
 })
 
 app.get('/', async (req, res) => {
+	/*
 	const response = await axios({
 		"url": "https://api.vercel.com/v13/deployments",
 		"data": {
@@ -27,6 +26,8 @@ app.get('/', async (req, res) => {
 	}).catch(function (error) {
 	console.log(error.toJSON());
 	});
+	res.send('hello');
+	*/
 	res.send('hello');
 })
 
