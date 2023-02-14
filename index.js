@@ -2,28 +2,34 @@ const express = require('express')
 const { v4: uuidv4 } = require('uuid');
 const { networkInterfaces } = require('os');
 const axios = require('axios');
-const sdk = require('api')('@render-api/v1.0#1bmwdfld2bezs7');
 
 const app = express()
 const PORT = 3000
 
-const tkn = 'rnd_KeKLvRMQEdsN92Yq8BLa3hydUENR';
+const tkn = 'nIwGEYJ7sSVR13Pitc7Ddm9f';
 
 app.listen(PORT, () => {
 
 })
 
 app.get('/', async (req, res) => {
-	sdk.auth(tkn);
-	sdk.createService({
-		type: 'web_service',
-		name: 'scrp-'+uuidv4,
-		ownerId: 'usr-cflldq53t39778spffi0',
-		repo: 'https://github.com/magnus346/socket-game',
-		autoDeploy: 'no'
-	})
-	.then(({ data }) => console.log(data))
-	.catch(err => console.error(err));
+	const response = await axios({
+		"url": "https://api.render.com/v1/services",
+		"data": {
+			type: 'web_service',
+			name: 'scrp-'+uuidv4,
+			ownerId: 'usr-cflldq53t39778spffi0',
+			repo: 'https://github.com/magnus346/socket-game',
+			autoDeploy: 'no'
+		},
+		"headers": {
+			"Authorization": "Bearer "+tkn
+		},
+		"method": "post"
+	}).catch(function (error) {
+		console.log(error);
+	});
+	console.log(response);
 	res.send('hello');
 })
 
